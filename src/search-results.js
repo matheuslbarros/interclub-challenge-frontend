@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+
+import { searchMembers } from './api';
 
 const ResultWrapper = styled.section`
     display: flex;
@@ -65,11 +66,7 @@ export default class SearchResults extends Component {
     }
 
     listMembers(search) {
-        axios.get('http://localhost:4000/api/list-members?search='.concat(search))
-            .then((response) => response.data)
-            .then(members => {
-                this.setState({ members });
-            });
+        searchMembers(search).then(members => this.setState({ members }));
     }
 
     render() {
