@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 
 import SearchBar from './search-bar';
+import SearchResults from './search-results';
 
 const StyledWrapper = styled.div`
     width: 100vw;
@@ -46,6 +47,20 @@ const StyledLogoLink = styled.a`
 `;
 
 export default class App extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            search: '',
+        };
+
+        this.handleSearch = this.handleSearch.bind(this);
+    }
+
+    handleSearch(search) {
+        this.setState({ search });
+    }
+
     render() {
         return (
             <StyledWrapper>
@@ -53,7 +68,8 @@ export default class App extends Component {
                 <StyledLogoLink href='https://interclub.io' target='_blank'>
                     <img src='/assets/logo_48x48.png' />
                 </StyledLogoLink>
-                <SearchBar />
+                <SearchBar onChange={this.handleSearch} />
+                <SearchResults search={this.state.search} />
             </StyledWrapper>
         );
     }

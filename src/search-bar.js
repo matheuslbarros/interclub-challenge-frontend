@@ -42,5 +42,6 @@ export default class SearchBar extends Component {
         this.setState({
             searchValue: e.target.value
         });
+        this.props.onChange(e.target.value);
     }
 }
