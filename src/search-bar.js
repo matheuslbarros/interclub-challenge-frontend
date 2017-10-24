@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
-
+    margin-top: -21px;
 `
 
 const StyledInput = styled.input`

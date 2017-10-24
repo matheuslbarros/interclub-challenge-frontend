@@ -6,12 +6,12 @@ import SearchResults from './search-results';
 
 const StyledWrapper = styled.div`
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     position: relative;
     z-index: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: top;
     align-items: center;
 `;
 
@@ -24,17 +24,6 @@ const StyledMask = styled.div`
     top: 0;
     left: 0;
     z-index: -1;
-
-    &::after {
-        background-color: #7E57C2;
-        content: '';
-        display: block;
-        width: 100%;
-        height: 50vh;
-        position: absolute;
-        top: 50vh;
-        z-index: -1;
-    }
 `;
 
 const StyledLogoLink = styled.a`
@@ -44,6 +33,16 @@ const StyledLogoLink = styled.a`
     left: 50px;
     width: 48px;
     height: 48px;
+`;
+
+const StyledContainer = styled.div`
+    margin-top: 50vh;
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    align-items: center;
+    background-color: #7E57C2;
 `;
 
 export default class App extends Component {
@@ -68,8 +67,10 @@ export default class App extends Component {
                 <StyledLogoLink href='https://interclub.io' target='_blank'>
                     <img src='/assets/logo_48x48.png' />
                 </StyledLogoLink>
-                <SearchBar onChange={this.handleSearch} />
-                <SearchResults search={this.state.search} />
+                <StyledContainer>
+                    <SearchBar onChange={this.handleSearch} />
+                    <SearchResults search={this.state.search} />
+                </StyledContainer>
             </StyledWrapper>
         );
     }
