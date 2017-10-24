@@ -65,8 +65,14 @@ export default class SearchResults extends Component {
         }
     }
 
+    delayTimeout = null;
+
     listMembers(search) {
-        searchMembers(search).then(members => this.setState({ members }));
+        clearTimeout(this.delayTimeout);
+        
+        this.delayTimeout = setTimeout(() => {
+            searchMembers(search).then(members => this.setState({ members }));
+        }, 300);
     }
 
     render() {
