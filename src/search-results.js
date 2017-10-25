@@ -33,6 +33,11 @@ const ResultItem = styled.div`
     padding: 10px;
     font-size: 16px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.11);
+
+    &:hover {
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.03);
+    }
 `;
 
 const ItemFirstName = styled.div``;
@@ -45,25 +50,25 @@ const ItemNumber = styled.div``;
 
 export default class SearchResults extends Component {
 
+    delayTimeout = null;
+    
     constructor(props) {
         super(props);
 
         this.state = {
-            search: '',
-            members: [],
+            members: []
         };
     }
 
-    componentWillUpdate(prevProps, prevState) {
-        const search = prevProps.search;
-
-        if (search !== prevState.search) {
-            this.setState({ search });
-            this.listMembers(search);
+    componentWillReceiveProps(nextProps) {
+        const search = nextProps.search;
+        
+        if (search) {
+            this.listMembers(nextProps.search);
+        } else {
+            this.setState({ members: [] });
         }
     }
-
-    delayTimeout = null;
 
     listMembers(search) {
         clearTimeout(this.delayTimeout);
@@ -74,11 +79,15 @@ export default class SearchResults extends Component {
     }
 
     render() {
+        const handleClick = (member) => (e) => {
+            this.props.onSelect(member);
+        };
+
         return (
             <ResultWrapper>
                 {this.state.members.map((member, key) => {
                     return (
-                        <ResultItem key={key}>
+                        <ResultItem key={key} onClick={handleClick(member)}>
                             <ItemFirstName>{member.first_name}</ItemFirstName>
                             <ItemLastName>{member.last_name}</ItemLastName>
                             <ItemNumber>{member.number}</ItemNumber>

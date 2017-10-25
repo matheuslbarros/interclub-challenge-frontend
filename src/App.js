@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import SearchBar from './search-bar';
 import SearchResults from './search-results';
+import SearchDetail from './search-detail';
 
 const StyledWrapper = styled.div`
     width: 100vw;
@@ -51,13 +52,31 @@ export default class App extends Component {
 
         this.state = {
             search: '',
+            member: null,
+            showDetail: false,
         };
 
         this.handleSearch = this.handleSearch.bind(this);
+        this.handleMemberSelected = this.handleMemberSelected.bind(this);
+        this.handleCloseDetail = this.handleCloseDetail.bind(this);
     }
 
     handleSearch(search) {
-        this.setState({ search });
+        this.setState({
+            search,
+            showDetail: false,
+        });
+    }
+
+    handleMemberSelected(member) {
+        this.setState({
+            member,
+            showDetail: true,
+        });
+    }
+
+    handleCloseDetail() {
+        this.setState({ showDetail: false });
     }
 
     render() {
@@ -65,11 +84,12 @@ export default class App extends Component {
             <StyledWrapper>
                 <StyledMask />
                 <StyledLogoLink href='https://interclub.io' target='_blank'>
-                    <img src='/assets/logo_48x48.png' />
+                    <img src='/assets/logo_48x48.png' alt='Logo Interclub' />
                 </StyledLogoLink>
                 <StyledContainer>
                     <SearchBar onChange={this.handleSearch} />
-                    <SearchResults search={this.state.search} />
+                    <SearchResults search={this.state.search} onSelect={this.handleMemberSelected} />
+                    <SearchDetail member={this.state.member} showModal={this.state.showDetail} onRequestClose={this.handleCloseDetail} />
                 </StyledContainer>
             </StyledWrapper>
         );
